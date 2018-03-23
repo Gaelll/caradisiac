@@ -1,43 +1,16 @@
-/**const {getBrands} = require('node-car-api');
-const {getModels} = require('node-car-api');
-
-//const brands = getBrands();
-
-//console.log(brands);
-
-const brands = getBrands().then(res => {
-  console.log(res)
-  }).catch(err=>{
-  console.log(err)
-});
-
-for(var i = 0; i < brands.length; i++){
-	const models = getModels(i).then(res => {
-  console.log(res)
-  }).catch(err=>{
-  console.log(err)
-});
-}*/
-
-
 const {getBrands} = require('node-car-api');
 const {getModels} = require('node-car-api');
+var express = require('express');
+var app = express();
+
+app.listen(9292, function () {
+  console.log("Listening on port 9292");
+});
 
 
-async function getModel(model)
-{
-  const models = await getModels(model);
-  return models;
-}
-
-async function getBrand()
-{
-  const brands = await getBrands();
-  return brands;
-}
-
-
-let brands = getBrand();
+app.get('/populate', function (req, res) {
+  console.log("Hello");
+  let brands = getBrand();
 
 brands.then(function(result)
 {
@@ -52,6 +25,20 @@ brands.then(function(result)
   }
 
 });
+})
+
+async function getModel(model)
+{
+  const models = await getModels(model);
+  return models;
+}
+
+async function getBrand()
+{
+  const brands = await getBrands();
+  return brands;
+}
+
 
 //
 //console.log(models);
