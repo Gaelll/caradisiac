@@ -20,7 +20,7 @@ app.get('/populate', function (req, resultat) {
   brands.then(function(result)
   {
     client.indices.create({  
-      index: 'caradisiac'
+      index: 'caradisiac2'
     },function(err,resp,status) {
       if(err) {
         console.log(err);
@@ -38,11 +38,11 @@ app.get('/populate', function (req, resultat) {
         if(res.length != 0)
         {
           var myId = res[0].uuid;
-          var myBody = res[0];
+          var body = res[0];
+          var myBody = { index: {_index: 'caradisiac2', _type: 'model', _id: myId } }, body;
 
-          client.index({
-            index: 'caradisiac',
-            id: myId,
+          client.bulk({
+            index: 'caradisiac2',
             type: 'model',
             body: myBody
           }, function(err, resp, status) {
